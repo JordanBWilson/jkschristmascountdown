@@ -1,6 +1,85 @@
 
-let daysTillXMas = '';
+let daysTillXMasMessage = '';
+let daysTillXMas = 0;
 let snowFlakes = [];
+let correctAnswers = 0;
+let wrongAnswers = 0;
+let questions = [
+  {
+    id:1, 
+    msg: 'Who is your Daddy?'
+  },
+  {
+    id:2, 
+    msg: 'What is your Favorite Color?'
+  },
+  {
+    id:3, 
+    msg: 'Guess a number between 1 and 4'
+  },
+];
+let answers = [
+  {
+    id:1, 
+    msg: 'Your Mom', 
+    ansr: false
+  },
+  {
+    id:1, 
+    msg: 'Your Husband', 
+    ansr: false
+  },
+  {
+    id:1, 
+    msg: 'Your Wife', 
+    ansr: false
+  },
+  {
+    id:1, 
+    msg: 'Your Daddy', 
+    ansr: true
+  },
+  {
+    id:2, 
+    msg: 'Red', 
+    ansr: false
+  },
+  {
+    id:2, 
+    msg: 'Blue', 
+    ansr: true
+  },
+  {
+    id:2, 
+    msg: 'Green', 
+    ansr: false
+  },
+  {
+    id:2, 
+    msg: 'Yellow', 
+    ansr: false
+  },
+  {
+    id:3, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:3, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:3, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:3, 
+    msg: 'III', 
+    ansr: false
+  },
+];
 (function() {
 
   Game.canvas = document.getElementById('Stage');
@@ -41,7 +120,7 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = { 
     method: function(id) {
       drawText({ 
-        font: '2em serif', 
+        font: '1.5em serif', 
         msg: 'The Taylor Family', 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.25), 
@@ -56,7 +135,7 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = { 
     method: function(id) {
       drawText({ 
-        font: '2em serif', 
+        font: '1.5em serif', 
         msg: 'Countdown To Christmas', 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.37), 
@@ -72,7 +151,7 @@ function drawMainMenu() { // draw the main menu
     method: function(id) {
       drawText({ 
         font: '1em serif', 
-        msg: daysTillXMas, 
+        msg: daysTillXMasMessage, 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.57), 
         color: 'white', 
@@ -83,6 +162,32 @@ function drawMainMenu() { // draw the main menu
     } 
   };
   Game.addMethod(Game.methodSetup);
+  
+  if (daysTillXMas > 0) {
+    Game.methodSetup = {
+      method: function(id) {
+         drawButton({
+          posX: (Game.canvas.width * 0.3),
+          posY: (Game.canvas.height * 0.65),
+          width: (Game.canvas.width * 0.4),
+          height: (Game.entitySize * 7),
+          lineWidth: 1,
+          btnColor: 'grey',
+          txtColor: 'white',
+          font: '1.3em serif',
+          msg: 'Access Code',
+          isFilled: true,
+          id: id,
+          isSolid: false,
+          action: { method: function(id) { createSafeQuestions(); }},
+          props: {},
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+  }
+  
   
 }
 
@@ -130,6 +235,281 @@ function daysTillChristmas() {
     xmas.setFullYear(xmas.getFullYear() + 1); 
   }  
   let one_day=1000*60*60*24;
-  daysTillXMas = Math.ceil((xmas.getTime() - today.getTime()) / (one_day)) + 
-  ' days left until Christmas!';
+  daysTillXMas = Math.ceil((xmas.getTime() - today.getTime()) / (one_day));
+  daysTillXMasMessage = daysTillXMas + ' days left until Christmas!';
+}
+
+function createSafeQuestions() {
+  let randomQuestionId = Math.floor(Math.random() * questions.length);
+  safeQuestion(randomQuestionId);
+}
+
+function safeQuestion(id) {
+  let question = questions[id]?.msg
+  let currentAnswers = answers.filter(item => item.id === questions[id].id);
+  Game.clearStage();
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: 0, 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'background', 
+        isSolid: false, 
+        isBackground: true, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.1em serif', 
+        msg: question, 
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.17), 
+        color: 'white', 
+        align: 'center', 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+      method: function(id) {
+         drawButton({
+          posX: (Game.canvas.width * 0.03),
+          posY: (Game.canvas.height * 0.35),
+          width: (Game.canvas.width * 0.45),
+          height: (Game.entitySize * 7),
+          lineWidth: 1,
+          btnColor: 'grey',
+          txtColor: 'white',
+          font: '1em serif',
+          msg: currentAnswers[0].msg,
+          isFilled: true,
+          id: id,
+          isSolid: false,
+          action: { method: function(id) { isAnswerCorrect(currentAnswers[0].ansr); }},
+          props: {},
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+    Game.methodSetup = {
+      method: function(id) {
+         drawButton({
+          posX: (Game.canvas.width * 0.52),
+          posY: (Game.canvas.height * 0.35),
+          width: (Game.canvas.width * 0.45),
+          height: (Game.entitySize * 7),
+          lineWidth: 1,
+          btnColor: 'grey',
+          txtColor: 'white',
+          font: '1em serif',
+          msg: currentAnswers[1].msg,
+          isFilled: true,
+          id: id,
+          isSolid: false,
+          action: { method: function(id) { isAnswerCorrect(currentAnswers[1].ansr); }},
+          props: {},
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+    Game.methodSetup = {
+      method: function(id) {
+         drawButton({
+          posX: (Game.canvas.width * 0.03),
+          posY: (Game.canvas.height * 0.65),
+          width: (Game.canvas.width * 0.45),
+          height: (Game.entitySize * 7),
+          lineWidth: 1,
+          btnColor: 'grey',
+          txtColor: 'white',
+          font: '1em serif',
+          msg: currentAnswers[2].msg,
+          isFilled: true,
+          id: id,
+          isSolid: false,
+          action: { method: function(id) { isAnswerCorrect(currentAnswers[2].ansr); }},
+          props: {},
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+    Game.methodSetup = {
+      method: function(id) {
+         drawButton({
+          posX: (Game.canvas.width * 0.52),
+          posY: (Game.canvas.height * 0.65),
+          width: (Game.canvas.width * 0.45),
+          height: (Game.entitySize * 7),
+          lineWidth: 1,
+          btnColor: 'grey',
+          txtColor: 'white',
+          font: '1em serif',
+          msg: currentAnswers[3].msg,
+          isFilled: true,
+          id: id,
+          isSolid: false,
+          action: { method: function(id) { isAnswerCorrect(currentAnswers[3].ansr); }},
+          props: {},
+          methodId: id
+        });
+      }
+    };
+    Game.addMethod(Game.methodSetup);
+}
+
+function isAnswerCorrect(isCorrect) {
+  if (isCorrect) {
+    correctAnswers++;
+    correctScreen();
+  } else {
+    wrongScreen();
+    wrongAnswers++;
+  }
+  if (wrongAnswers >= 3) {
+    correctAnswers = 0;
+    wrongAnswers = 0;
+    drawMainMenu();
+  }
+}
+
+function correctScreen() {
+  Game.clearStage();
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: 0, 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'background', 
+        isSolid: false, 
+        isBackground: true, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.5em serif', 
+        msg: 'That is Correct!', 
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.17), 
+        color: 'white', 
+        align: 'center', 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.65),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1em serif',
+        msg: 'Next Question...',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { createSafeQuestions(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+}
+
+function wrongScreen() {
+  Game.clearStage();
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: 0, 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'background', 
+        isSolid: false, 
+        isBackground: true, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.5em serif', 
+        msg: 'That is Wrong!', 
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.17), 
+        color: 'white', 
+        align: 'center', 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.65),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1em serif',
+        msg: 'Next Question...',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { createSafeQuestions(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
 }
