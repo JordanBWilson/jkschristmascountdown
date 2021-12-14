@@ -6,7 +6,12 @@ let snowFlakes = [];
   Game.canvas = document.getElementById('Stage');
   daysTillChristmas();
   drawMainMenu();
-  addSnow();
+  
+  setInterval(function() {
+    addSnow();
+  }, 300);
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
 })();
 
 
@@ -36,8 +41,8 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = { 
     method: function(id) {
       drawText({ 
-        font: '3em serif', 
-        msg: 'JKS Christmas', 
+        font: '2em serif', 
+        msg: 'The Taylor Family', 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.25), 
         color: 'white', 
@@ -51,8 +56,8 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = { 
     method: function(id) {
       drawText({ 
-        font: '3em serif', 
-        msg: 'Countdown', 
+        font: '2em serif', 
+        msg: 'Countdown To Christmas', 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.37), 
         color: 'white', 
@@ -66,7 +71,7 @@ function drawMainMenu() { // draw the main menu
   Game.methodSetup = { 
     method: function(id) {
       drawText({ 
-        font: '2em serif', 
+        font: '1em serif', 
         msg: daysTillXMas, 
         posX: (Game.canvas.width * 0.5), 
         posY: (Game.canvas.height * 0.57), 
@@ -89,8 +94,8 @@ function addSnow() {
     method: function(id) {
       drawArc({ 
         posX: randomX, 
-        posY: (Game.canvas.height * 0.52), 
-        width: (Game.entitySize * 1), 
+        posY: (Game.canvas.height * 0.0), 
+        width: (Game.entitySize * .4), 
         aglStrt: 0, 
         aglEnd: 2 * Math.PI, 
         lineWidth: 2, 
@@ -104,8 +109,7 @@ function addSnow() {
     } 
   };
   Game.addMethod(Game.methodSetup);
-  Game.methodSetup = { method: function(id) { moveSnow(); }};
-  Game.addMethod(Game.methodSetup);
+  
 }
 
 function moveSnow() {
@@ -113,6 +117,9 @@ function moveSnow() {
   
   for (let i = 0; i < snowFlakes.length; i++) {
     snowFlakes[i].posY += Game.moveEntity(0.1, Game.enumDirections.topDown);
+    if (snowFlakes[i].posY >= (Game.canvas.height)) {
+      Game.deleteEntity(snowFlakes[i].methodId);
+    }
   }
 }
 

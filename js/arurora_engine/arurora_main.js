@@ -145,7 +145,6 @@ function backgroundAnimationCheck(index) {
                     if (Game.methodObjects[j].height) { // check for a rect shape
                       Game.methodObjects[j].isAnim = true;
                     }
-
                   }
                   // redraw this text
                   if(Game.methodObjects[j].align && j !== index && !Game.methodObjects[j].isAnim) {
