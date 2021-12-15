@@ -17,6 +17,10 @@ let questions = [
     id:3, 
     msg: 'Guess a number between 1 and 4'
   },
+  {
+    id:4, 
+    msg: 'How cold is it outside?'
+  },
 ];
 let answers = [
   {
@@ -79,6 +83,186 @@ let answers = [
     msg: 'III', 
     ansr: false
   },
+  {
+    id:4, 
+    msg: 'Real Cold', 
+    ansr: false
+  },
+  {
+    id:4, 
+    msg: 'Damn Cold', 
+    ansr: true
+  },
+  {
+    id:4, 
+    msg: '50 Degrees F', 
+    ansr: false
+  },
+  {
+    id:4, 
+    msg: 'Your Mom', 
+    ansr: false
+  },
+  {
+    id:5, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:5, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:5, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:5, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:6, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:6, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:6, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:6, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:7, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:7, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:7, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:7, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:8, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:8, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:8, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:8, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:9, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:9, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:9, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:9, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:10, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:10, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:10, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:10, 
+    msg: 'III', 
+    ansr: false
+  },
+  {
+    id:11, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:11, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:11, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:11, 
+    msg: 'III', 
+    ansr: false
+  },
+    {
+    id:12, 
+    msg: 'two', 
+    ansr: false
+  },
+  {
+    id:12, 
+    msg: '4', 
+    ansr: false
+  },
+  {
+    id:12, 
+    msg: '1', 
+    ansr: true
+  },
+  {
+    id:12, 
+    msg: 'III', 
+    ansr: false
+  },
 ];
 (function() {
 
@@ -89,8 +273,6 @@ let answers = [
   setInterval(function() {
     addSnow();
   }, 300);
-  Game.methodSetup = { method: function(id) { moveSnow(); }};
-  Game.addMethod(Game.methodSetup);
 })();
 
 
@@ -98,6 +280,8 @@ let answers = [
 function drawMainMenu() { // draw the main menu
   Game.clearStage();
   Game.setSettingsHigh();
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
   Game.methodSetup = { 
     method: function(id) {
       drawRect({ 
@@ -234,7 +418,7 @@ function daysTillChristmas() {
   if (today.getMonth() === 11 && today.getDate() > 25) {
     xmas.setFullYear(xmas.getFullYear() + 1); 
   }  
-  let one_day=1000*60*60*24;
+  let one_day = 1000 * 60 * 60 * 24;
   daysTillXMas = Math.ceil((xmas.getTime() - today.getTime()) / (one_day));
   daysTillXMasMessage = daysTillXMas + ' days left until Christmas!';
 }
@@ -388,6 +572,11 @@ function isAnswerCorrect(isCorrect) {
     wrongAnswers = 0;
     drawMainMenu();
   }
+  if (correctAnswers >= 10) {
+    correctAnswers = 0;
+    wrongAnswers = 0;
+    youWin();
+  }
 }
 
 function correctScreen() {
@@ -506,6 +695,82 @@ function wrongScreen() {
         id: id,
         isSolid: false,
         action: { method: function(id) { createSafeQuestions(); }},
+        props: {},
+        methodId: id
+      });
+    }
+  };
+  Game.addMethod(Game.methodSetup);
+}
+function youWin() {
+  Game.clearStage();
+  Game.methodSetup = { 
+    method: function(id) {
+      drawRect({ 
+        posX: 0, 
+        posY: 0, 
+        width: Game.canvas.width, 
+        height: Game.canvas.height, 
+        lineWidth: 1, 
+        color: 'black', 
+        isFilled: true, 
+        id: 'background', 
+        isSolid: false, 
+        isBackground: true, 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { method: function(id) { moveSnow(); }};
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.3em serif', 
+        msg: 'Alright, you did it! Here it is:', 
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.17), 
+        color: 'white', 
+        align: 'center', 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = { 
+    method: function(id) {
+      drawText({ 
+        font: '1.2em serif', 
+        msg: 'Try again on Christmas ;]', 
+        posX: (Game.canvas.width * 0.5), 
+        posY: (Game.canvas.height * 0.37), 
+        color: 'white', 
+        align: 'center', 
+        props: {}, 
+        methodId: id 
+      });
+    } 
+  };
+  Game.addMethod(Game.methodSetup);
+  Game.methodSetup = {
+    method: function(id) {
+      drawButton({
+        posX: (Game.canvas.width * 0.3),
+        posY: (Game.canvas.height * 0.65),
+        width: (Game.canvas.width * 0.4),
+        height: (Game.entitySize * 7),
+        lineWidth: 1,
+        btnColor: 'grey',
+        txtColor: 'white',
+        font: '1em serif',
+        msg: 'Got Yeah!',
+        isFilled: true,
+        id: id,
+        isSolid: false,
+        action: { method: function(id) { drawMainMenu(); }},
         props: {},
         methodId: id
       });
