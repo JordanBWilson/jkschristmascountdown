@@ -21,6 +21,38 @@ let questions = [
     id:4, 
     msg: 'How cold is it outside?'
   },
+  {
+    id:5, 
+    msg: 'All I want for Christmas is...'
+  },
+  {
+    id:6, 
+    msg: 'The weather outside is...'
+  },
+  {
+    id:7, 
+    msg: 'Beatle Juice, Beatle Juice...'
+  },
+  {
+    id:8, 
+    msg: 'What is the best Pokeman?'
+  },
+  {
+    id:9, 
+    msg: 'He knows when you are sleeping...'
+  },
+  {
+    id:10, 
+    msg: 'Who is under the mistletoe?'
+  },
+  {
+    id:11, 
+    msg: 'What is the meaning of Christmas?'
+  },
+  {
+    id:12, 
+    msg: 'I hope you get this right...'
+  },
 ];
 let answers = [
   {
@@ -105,162 +137,162 @@ let answers = [
   },
   {
     id:5, 
-    msg: 'two', 
+    msg: 'My two front teeth', 
     ansr: false
   },
   {
     id:5, 
-    msg: '1', 
+    msg: 'My 2 front teeth', 
     ansr: true
   },
   {
     id:5, 
-    msg: '4', 
+    msg: 'My 2 front teef', 
     ansr: false
   },
   {
     id:5, 
-    msg: 'III', 
+    msg: 'The code to the safe', 
     ansr: false
   },
   {
     id:6, 
-    msg: 'two', 
+    msg: 'Frightful', 
     ansr: false
   },
   {
     id:6, 
-    msg: '4', 
+    msg: '10 yees', 
     ansr: false
   },
   {
     id:6, 
-    msg: '1', 
+    msg: 'Too Fucking hott for December', 
     ansr: true
   },
   {
     id:6, 
-    msg: 'III', 
+    msg: 'Your Mom is hot', 
     ansr: false
   },
   {
     id:7, 
-    msg: 'two', 
+    msg: 'Beatle Juice', 
     ansr: false
   },
   {
     id:7, 
-    msg: '4', 
+    msg: 'Beatle Juice!', 
     ansr: false
   },
   {
     id:7, 
-    msg: 'III', 
+    msg: 'Beatle Juice!!!', 
     ansr: false
   },
   {
     id:7, 
-    msg: '1', 
+    msg: 'I hate you guys', 
     ansr: true
   },
   {
     id:8, 
-    msg: '1', 
+    msg: 'Caterpie', 
     ansr: true
   },
   {
     id:8, 
-    msg: 'two', 
+    msg: 'Charmander', 
     ansr: false
   },
   {
     id:8, 
-    msg: '4', 
+    msg: 'Squirtle', 
     ansr: false
   },
   {
     id:8, 
-    msg: 'III', 
+    msg: 'Bulbasaur', 
     ansr: false
   },
   {
     id:9, 
-    msg: '1', 
+    msg: 'He knows. He knows!', 
     ansr: true
   },
   {
     id:9, 
-    msg: 'two', 
+    msg: 'He knows when you are awake', 
     ansr: false
   },
   {
     id:9, 
-    msg: '4', 
+    msg: "he know's when you're awake", 
     ansr: false
   },
   {
     id:9, 
-    msg: 'III', 
+    msg: 'he knows...', 
     ansr: false
   },
   {
     id:10, 
-    msg: 'two', 
+    msg: 'Your Neighbor', 
     ansr: false
   },
   {
     id:10, 
-    msg: '1', 
+    msg: 'Your Mom', 
     ansr: true
   },
   {
     id:10, 
-    msg: '4', 
+    msg: 'Your Dad', 
     ansr: false
   },
   {
     id:10, 
-    msg: 'III', 
+    msg: 'Your Crush', 
     ansr: false
   },
   {
     id:11, 
-    msg: 'two', 
+    msg: 'The Presents', 
     ansr: false
   },
   {
     id:11, 
-    msg: '4', 
+    msg: 'The Season', 
     ansr: false
   },
   {
     id:11, 
-    msg: '1', 
+    msg: 'Whatever Linus Said', 
     ansr: true
   },
   {
     id:11, 
-    msg: 'III', 
+    msg: 'The Winter Solstice', 
     ansr: false
   },
     {
     id:12, 
-    msg: 'two', 
+    msg: 'right', 
     ansr: false
   },
   {
     id:12, 
-    msg: '4', 
+    msg: 'right', 
     ansr: false
   },
   {
     id:12, 
-    msg: '1', 
+    msg: 'right', 
     ansr: true
   },
   {
     id:12, 
-    msg: 'III', 
+    msg: 'left', 
     ansr: false
   },
 ];
